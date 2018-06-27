@@ -1,0 +1,23 @@
+{
+  "name": "proyecto-final-backend",
+  "version": "1.0.0",
+  "description": "Module to calculate execution times of BOCA contest with the right solution.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/Canqui/proyecto-final-backend.git"
+  },
+  "author": "Daniel Canqui",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/Canqui/proyecto-final-backend/issues"
+  },
+  "homepage": "https://gitlab.com/Canqui/proyecto-final-backend#README",
+  "dependencies": {
+    "pg": "~7.4.3",
+    "pg-large-object": "~2.0.0"
+  }
+}
