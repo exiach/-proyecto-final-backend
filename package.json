@@ -18,6 +18,7 @@
   "homepage": "https://gitlab.com/Canqui/proyecto-final-backend#README",
   "dependencies": {
     "pg": "~7.4.3",
-    "pg-large-object": "~2.0.0"
+    "pg-large-object": "~2.0.0",
+    "pg-promise": "^8.5.0"
   }
 }
