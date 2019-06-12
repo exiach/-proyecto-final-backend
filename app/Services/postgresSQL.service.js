@@ -1,25 +1,44 @@
-// // const { Pool, Client } = require('pg');
-// // const connectionString = 'postgresql://bocauser:boca@192.168.247.173:5432/bocadb';
-// //16617
-// // const pool = new Pool({
-// //   connectionString: connectionString,
-// // })
+const { Pool, Client } = require('pg');
 
-// // pool.query('select * from problemtable where problemnumber = 1 ', (err, res) => {
-// //    var problem = res.rows[0];
-// //    console.log(problem); 
-// //    pool.end()
-// // })
+const testConection = (configuration) => {
+  const { host, port, nameBD, userName, password } = configuration
+  const connectionString = 'postgresql://'+userName+':'+password+'@'+host+':'+port+'/'+nameBD;  
+  const pool = new Pool({
+    connectionString: connectionString,
+  })
 
-// // const client = new Client({
-// //   connectionString: connectionString,
-// // })
-// // client.connect()
+  return pool.query('select * from problemtable')
+    .then(response => {
+      console.log(response.rows);
+      pool.end();
+      return true;
+    })
+    .catch(err => {
+      console.error(err);
+      pool.end();
+      return false;
+    });
+}
 
-// // client.query('select * from problemtable', (err, res) => {
-// //   console.log('hola');
-// //   client.end()
-// // })
+// const pool = new Pool({
+//   connectionString: connectionString,
+// })
+
+// pool.query('select * from problemtable where problemnumber = 1 ', (err, res) => {
+//    var problem = res.rows[0];
+//    console.log(problem); 
+//    pool.end()
+// })
+
+// const client = new Client({
+//   connectionString: connectionString,
+// })
+// client.connect()
+
+// client.query('select * from problemtable', (err, res) => {
+//   console.log('hola');
+//   client.end()
+// })
 // const pgp = require('pg-promise')();
 // const {LargeObjectManager} = require('pg-large-object');
 // const {createWriteStream} = require('fs');
@@ -60,4 +79,6 @@
 //   console.log('Something went horribly wrong!', error);
 // });
 
-// const require
+module.exports = {
+  testConection: testConection
+}
