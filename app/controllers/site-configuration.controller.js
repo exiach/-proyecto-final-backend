@@ -6,9 +6,11 @@ const postSiteConfiguration = (req, res) => {
   .then(response => { 
     if (response) {
       try {
-        siteConfigurationService.saveConfiguration(req.body);
+        siteConfigurationService.saveConfiguration(req.body, res);
       } catch (error) {
-        console.error(error);        
+        console.error(error);  
+        res.status(400);
+        res.send(error);    
       }
     } else {
       res.status(400);
