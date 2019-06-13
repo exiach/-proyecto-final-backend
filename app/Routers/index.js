@@ -8,4 +8,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/site/configuration', siteConfiguration.postSiteConfiguration);
+
+router.get('/site/configuration', siteConfiguration.getSiteConfiguration);
+
 module.exports = router

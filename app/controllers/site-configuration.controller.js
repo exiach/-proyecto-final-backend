@@ -1,5 +1,6 @@
 const siteConfigurationService = require('../Services').siteConfigurationServices;
-const postgresSqlService = require('../Services').postgresSqlService
+const postgresSqlService = require('../Services').postgresSqlService;
+const SiteConfiguration = require('../Models').SiteConfiguration;
 
 const postSiteConfiguration = (req, res) => {
   postgresSqlService.testConection(req.body)
@@ -19,7 +20,23 @@ const postSiteConfiguration = (req, res) => {
   });
 };
 
+const getSiteConfiguration = async (req, res) => {
+  try {
+    var result = await SiteConfiguration.find().exec();
+    if (result.length > 0)
+      res.send({
+        enableSettingsDB: true
+      });
+    else
+      res.send({
+        enableSettingsDB: false
+      });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
 
 module.exports = {
-  postSiteConfiguration: postSiteConfiguration
+  postSiteConfiguration: postSiteConfiguration,
+  getSiteConfiguration: getSiteConfiguration
 };
