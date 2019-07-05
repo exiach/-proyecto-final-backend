@@ -4,8 +4,12 @@ const SiteConfiguration = require('../Models').SiteConfiguration;
 
 const postSiteConfiguration = (req, res) => {
   postgresSqlService.testConection(req.body)
-  .then(response => { 
-    if (response) {
+  .then(result => {
+    if (result.error) {
+      res.status(400);
+      res.send(result.error.message);
+      console.log(result)
+    } else {
       try {
         siteConfigurationService.saveConfiguration(req.body, res);
       } catch (error) {
@@ -13,9 +17,6 @@ const postSiteConfiguration = (req, res) => {
         res.status(400);
         res.send(error);    
       }
-    } else {
-      res.status(400);
-      res.send('None shall pass');
     } 
   });
 };

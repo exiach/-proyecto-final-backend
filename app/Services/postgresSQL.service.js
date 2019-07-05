@@ -11,12 +11,12 @@ const testConection = (configuration) => {
     .then(response => {
       console.log(response.rows);
       pool.end();
-      return true;
+      return {};
     })
-    .catch(err => {
-      console.error(err);
+    .catch(error => {
+      console.error(error);
       pool.end();
-      return false;
+      return { error: error };
     });
 }
 
