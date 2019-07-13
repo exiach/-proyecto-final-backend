@@ -1,12 +1,12 @@
 const SiteConfiguration = require('../Models').SiteConfiguration;
 
 const saveConfiguration = (configuration, res) => {
-  const { host, port, nameBD, userName, password } = configuration;
+  const { host, port, nameDB, userName, password } = configuration;
 
   const siteConfiguration = new SiteConfiguration({ 
     host: host,
     port: port,
-    nameBD: nameBD,
+    nameDB: nameDB,
     userName: userName,
     password: password
   });
@@ -14,7 +14,7 @@ const saveConfiguration = (configuration, res) => {
     if (err) return handleError(err);
     // saved!
     res.status = 200;
-    res.send('Configuration saved');
+    res.send();
   });
 }
 

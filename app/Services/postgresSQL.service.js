@@ -1,8 +1,8 @@
 const { Pool, Client } = require('pg');
 
 const testConection = (configuration) => {
-  const { host, port, nameBD, userName, password } = configuration
-  const connectionString = 'postgresql://'+userName+':'+password+'@'+host+':'+port+'/'+nameBD;  
+  const { host, port, nameDB, userName, password } = configuration
+  const connectionString = 'postgresql://'+userName+':'+password+'@'+host+':'+port+'/'+nameDB;  
   const pool = new Pool({
     connectionString: connectionString,
   })
