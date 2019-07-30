@@ -11,4 +11,6 @@ router.post('/site/configuration', siteConfiguration.postSiteConfiguration);
 
 router.get('/site/configuration', siteConfiguration.getSiteConfiguration);
 
+router.get('/login');
+
 module.exports = router
