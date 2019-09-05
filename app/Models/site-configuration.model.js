@@ -22,10 +22,10 @@ const siteConfigurationSchema = new mongoose.Schema({
     type: String
   },
   userName: {
-    String
+    type: String
   },
   password: {
-    String
+    type: String
   }
 });
 
