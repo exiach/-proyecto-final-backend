@@ -1,11 +1,12 @@
 const { Pool, Client } = require('pg');
+const siteConfigurationService = require('./site-configuration.services');
 
 const testConection = (configuration) => {
   const { host, port, nameDB, userName, password } = configuration
   const connectionString = 'postgresql://'+userName+':'+password+'@'+host+':'+port+'/'+nameDB;  
   const pool = new Pool({
     connectionString: connectionString,
-  })
+  });
 
   return pool.query('select * from problemtable')
     .then(response => {
@@ -19,6 +20,31 @@ const testConection = (configuration) => {
       return { error: error };
     });
 }
+
+const getUserBocaAdmin = async (name, password) => {
+  const result = await siteConfigurationService.getSiteConfigurations();
+  if (result.length > 0) {
+    const config = result.pop();
+    const connectionString = 'postgresql://'+ config.userName +':'+ config.password  +'@'+ config.host+':'+config.port+'/'+config.nameDB;
+    const pool = new Pool({
+      connectionString: connectionString,
+    });
+
+    const query = 'select * from usertable where username = \''+name+'\' and usertype = \'admin\' and userpassword = \''+password+'\'' ;
+    pool.query(query)
+    .then(response => {
+      console.log(response.rows);
+      pool.end();
+      return response.rows;
+    })
+    .catch(error => {
+      console.error(error);
+      pool.end();
+      return { error: error };
+    });
+  }
+}
+
 
 // const pool = new Pool({
 //   connectionString: connectionString,
@@ -80,5 +106,6 @@ const testConection = (configuration) => {
 // });
 
 module.exports = {
-  testConection: testConection
+  testConection: testConection,
+  getUserBocaAdmin: getUserBocaAdmin
 }

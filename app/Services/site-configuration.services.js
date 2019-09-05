@@ -18,8 +18,14 @@ const saveConfiguration = (configuration, res) => {
   });
 }
 
+const getSiteConfigurations = async () => {
+  const result = await SiteConfiguration.find().exec();
+  return result;
+}
+
 module.exports = {
-  saveConfiguration: saveConfiguration
+  saveConfiguration: saveConfiguration,
+  getSiteConfigurations: getSiteConfigurations
 }
 
 
