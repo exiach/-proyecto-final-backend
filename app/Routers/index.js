@@ -13,7 +13,7 @@ router.post('/site/configuration', siteConfiguration.postSiteConfiguration);
 
 router.get('/site/configuration', siteConfiguration.getSiteConfiguration);
 
-router.get('/login', login.signIn);
+router.post('/login', login.signIn);
 
 // TODO only for testing remove after define new api's with private access.
 router.get('/private', auth.isAuth, function(req, res) {

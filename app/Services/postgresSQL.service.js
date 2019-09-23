@@ -31,17 +31,25 @@ const getUserBocaAdmin = async (name, password) => {
     });
 
     const query = 'select * from usertable where username = \''+name+'\' and usertype = \'admin\' and userpassword = \''+password+'\'' ;
-    pool.query(query)
-    .then(response => {
-      console.log(response.rows);
+    try {
+      const response = await pool.query(query);
       pool.end();
       return response.rows;
-    })
-    .catch(error => {
-      console.error(error);
+    } catch (e) {
       pool.end();
-      return { error: error };
-    });
+      return { error: e };
+    }
+    // pool.query(query)
+    // .then(response => {
+    //   console.log(response.rows);
+    //   pool.end();
+    //   return response.rows;
+    // })
+    // .catch(error => {
+    //   console.error(error);
+    //   pool.end();
+    //   return { error: error };
+    // });
   }
 }
 
