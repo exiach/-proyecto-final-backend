@@ -39,21 +39,29 @@ const getUserBocaAdmin = async (name, password) => {
       pool.end();
       return { error: e };
     }
-    // pool.query(query)
-    // .then(response => {
-    //   console.log(response.rows);
-    //   pool.end();
-    //   return response.rows;
-    // })
-    // .catch(error => {
-    //   console.error(error);
-    //   pool.end();
-    //   return { error: error };
-    // });
   }
 }
 
+const getAllContest = async () => {
+  const result = await siteConfigurationService.getSiteConfigurations();
+  if (result.length > 0) {
+    const config = result.pop();
+    const connectionString = 'postgresql://'+ config.userName +':'+ config.password  +'@'+ config.host+':'+config.port+'/'+config.nameDB;
+    const pool = new Pool({
+      connectionString: connectionString,
+    });
 
+    const query = 'select * from contesttable;';
+    try {
+      const response = await pool.query(query);
+      pool.end();
+      return response.rows;
+    } catch (e) {
+      pool.end();
+      return { error: e };
+    }
+  }
+}
 // const pool = new Pool({
 //   connectionString: connectionString,
 // })
@@ -115,5 +123,6 @@ const getUserBocaAdmin = async (name, password) => {
 
 module.exports = {
   testConection: testConection,
-  getUserBocaAdmin: getUserBocaAdmin
+  getUserBocaAdmin: getUserBocaAdmin,
+  getAllContest: getAllContest
 }

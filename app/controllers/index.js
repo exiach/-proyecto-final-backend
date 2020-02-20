@@ -1,4 +1,5 @@
 module.exports = {
   siteConfiguration: require('./site-configuration.controller'),
-  login: require('./login')
+  login: require('./login'),
+  contests: require('./contests.controller')
 };
