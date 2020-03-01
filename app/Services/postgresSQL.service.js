@@ -72,7 +72,7 @@ const getProblemsByContestNumber = async (contestNumber) => {
       connectionString: connectionString,
     });
 
-    const query = 'select * from problemtable where contestnumber ='+contestNumber+';';
+    const query = 'select * from problemtable where contestnumber ='+contestNumber+' order by problemnumber;';
     try {
       const response = await pool.query(query);
       pool.end();
