@@ -62,6 +62,27 @@ const getAllContest = async () => {
     }
   }
 }
+
+const getProblemsByContestNumber = async (contestNumber) => {
+  const result = await siteConfigurationService.getSiteConfigurations();
+  if (result.length > 0) {
+    const config = result.pop();
+    const connectionString = 'postgresql://'+ config.userName +':'+ config.password  +'@'+ config.host+':'+config.port+'/'+config.nameDB;
+    const pool = new Pool({
+      connectionString: connectionString,
+    });
+
+    const query = 'select * from problemtable where contestnumber ='+contestNumber+';';
+    try {
+      const response = await pool.query(query);
+      pool.end();
+      return response.rows;
+    } catch (e) {
+      pool.end();
+      return { error: e };
+    }
+  }
+}
 // const pool = new Pool({
 //   connectionString: connectionString,
 // })
@@ -124,5 +145,6 @@ const getAllContest = async () => {
 module.exports = {
   testConection: testConection,
   getUserBocaAdmin: getUserBocaAdmin,
-  getAllContest: getAllContest
+  getAllContest: getAllContest,
+  getProblemsByContestNumber: getProblemsByContestNumber
 }
