@@ -83,6 +83,27 @@ const getProblemsByContestNumber = async (contestNumber) => {
     }
   }
 }
+
+const getLanguagesByContestNumber = async (contestNumber) => {
+  const result = await siteConfigurationService.getSiteConfigurations();
+  if (result.length > 0) {
+    const config = result.pop();
+    const connectionString = 'postgresql://'+ config.userName +':'+ config.password  +'@'+ config.host+':'+config.port+'/'+config.nameDB;
+    const pool = new Pool({
+      connectionString: connectionString,
+    });
+
+    const query = 'select * from langtable where contestnumber ='+contestNumber+' order by contestnumber;';
+    try {
+      const response = await pool.query(query);
+      pool.end();
+      return response.rows;
+    } catch (e) {
+      pool.end();
+      return { error: e };
+    }
+  }
+};
 // const pool = new Pool({
 //   connectionString: connectionString,
 // })
@@ -146,5 +167,6 @@ module.exports = {
   testConection: testConection,
   getUserBocaAdmin: getUserBocaAdmin,
   getAllContest: getAllContest,
-  getProblemsByContestNumber: getProblemsByContestNumber
+  getProblemsByContestNumber: getProblemsByContestNumber,
+  getLanguagesByContestNumber: getLanguagesByContestNumber
 }

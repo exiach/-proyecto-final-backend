@@ -1,9 +1,9 @@
 'use strict'
 const postgresSqlService = require('../Services').postgresSqlService;
 
-const problemsByContestId = async (req, res) => {
+const getLanguagesByContestNumber = async (req, res) => {
   try {
-    const response = await postgresSqlService.getProblemsByContestNumber(req.params.id);
+    const response = await postgresSqlService.getLanguagesByContestNumber(req.params.contestNumber);
     if (response && response.length > 0)
       return res.status(200).send(response);
     else
@@ -12,8 +12,7 @@ const problemsByContestId = async (req, res) => {
   } catch (e) {
     console.error(e);
   }
-}
-
+};
 module.exports = {
-  problemsByContestId
+  getLanguagesByContestNumber
 };
