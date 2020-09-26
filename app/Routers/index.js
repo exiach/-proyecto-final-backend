@@ -24,7 +24,7 @@ router.get('/contest/:id/problems', problems.problemsByContestId);
 
 router.get('/contest/:contestNumber/languages', languages.getLanguagesByContestNumber);
 
-//router.get('/contest/:contestNumber/problem/:problemNumber/language/:langNumber', teams.getTimesbyLang);
+router.get('/contest/:contestNumber/problem/:problemNumber/language/:langNumber', problems.getTimesbyLang);
 
 // TODO only for testing remove after define new api's with private access.
 router.get('/private', auth.isAuth, function(req, res) {
