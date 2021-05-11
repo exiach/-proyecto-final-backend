@@ -51,7 +51,7 @@ const getAllContest = async () => {
       connectionString: connectionString,
     });
 
-    const query = 'select * from contesttable;';
+    const query = 'select * from contesttable order by contestnumber desc;';
     try {
       const response = await pool.query(query);
       pool.end();
