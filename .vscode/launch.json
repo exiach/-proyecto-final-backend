@@ -8,11 +8,8 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}\\app\\app.js"
+      "program": "${workspaceFolder}/app/app.js" //for linux
+      //"program": "${workspaceFolder}\\app\\app.js" //for windows
     }
   ]
-}
-
-{
-  
 }
