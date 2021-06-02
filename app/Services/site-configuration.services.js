@@ -19,8 +19,12 @@ const saveConfiguration = (configuration, res) => {
 }
 
 const getSiteConfigurations = async () => {
-  const result = await SiteConfiguration.find().exec();
-  return result;
+  try {
+    const result = await SiteConfiguration.find().exec();
+    return result.pop();
+  } catch (e) {
+    return { error: e };
+  }
 }
 
 module.exports = {
