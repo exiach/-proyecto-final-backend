@@ -1,31 +1,31 @@
 const { Client } = require('pg');
 const siteConfigurationService = require('./site-configuration.services');
 
-const testConection = async (configuration) => {
+const testConection = (configuration) => {
   return executeQuery('select * from problemtable', configuration);
 };
 
-const getUserBocaAdmin = async (name, password) => {
+const getUserBocaAdmin = (name, password) => {
   const query = 'select * from usertable where username = \''+name+'\' and usertype = \'admin\' and userpassword = \''+password+'\'' ;
   return executeQuery(query);
 };
 
-const getAllContest = async () => {
+const getAllContest = () => {
   const query = 'select * from contesttable order by contestnumber desc;';
   return executeQuery(query);
 }
 
-const getProblemsByContestNumber = async (contestNumber) => {
+const getProblemsByContestNumber = (contestNumber) => {
   const query = 'select * from problemtable where contestnumber ='+contestNumber+' order by problemnumber;';
   return executeQuery(query);
 }
 
-const getLanguagesByContestNumber = async (contestNumber) => {
+const getLanguagesByContestNumber = (contestNumber) => {
   const query = 'select * from langtable where contestnumber ='+contestNumber+' order by contestnumber;';
   return executeQuery(query);
 };
 
-const getTeamsByProblem =  async (contestNumber, problemNumber, langNumber) => {
+const getTeamsByProblem = (contestNumber, problemNumber, langNumber) => {
   const query = `
     select * from usertable
     where usernumber in
@@ -45,7 +45,7 @@ const getTeamsByProblem =  async (contestNumber, problemNumber, langNumber) => {
   return executeQuery(query);
 };
 
-const getTimesbyProblemAndLang =  async (contestNumber, problemNumber, langNumber) => {
+const getTimesbyProblemAndLang = (contestNumber, problemNumber, langNumber) => {
   const query = `
     select * from runtable
     where contestnumber = ${contestNumber}
@@ -60,6 +60,10 @@ const getTimesbyProblemAndLang =  async (contestNumber, problemNumber, langNumbe
     order by usernumber
   `;
   return executeQuery(query);
+};
+
+const getUsebyUserName = userName => {
+  return executeQuery(`select * from usertable where username='${userName}'`);
 };
 
 const executeQuery = async (query, config=false) => {
@@ -93,5 +97,6 @@ module.exports = {
   getProblemsByContestNumber: getProblemsByContestNumber,
   getLanguagesByContestNumber: getLanguagesByContestNumber,
   getTimesbyProblemAndLang: getTimesbyProblemAndLang,
-  getTeamsByProblem: getTeamsByProblem
+  getTeamsByProblem: getTeamsByProblem,
+  getUsebyUserName: getUsebyUserName
 }

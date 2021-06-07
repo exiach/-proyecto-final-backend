@@ -12,7 +12,7 @@ function createToken (user) {
     exp: moment().add(2, 'hours').unix()
   };
   
-  return jwt.encode(payload, 'CLveejenplotojkn');
+  return jwt.encode(payload, 'CLveejenplotojkn', 'HS512');
 }
 
 module.exports = {

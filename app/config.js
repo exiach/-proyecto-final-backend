@@ -1,6 +1,6 @@
 //
-module.export = {
+module.exports = {
   port: process.env.PORT || 3001,
   db: process.env.MONGODB || '',
-  SECRETE_TOKEN: 'CLveejenplotojkn'
+  SECRET: 'CLveejenplotojkn'
 };

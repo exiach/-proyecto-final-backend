@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const controllers = require('../controllers');
 const siteConfiguration = controllers.siteConfiguration;
-const login = controllers.login;
-const auth = require('../middlewares/auth.middleware');
+const middleware = require('../middlewares/auth.middleware');
 const contests = controllers.contests;
 const problems = controllers.problems;
 const languages = controllers.languages;
+const auth = controllers.auth;
 
 router.get('/', (req, res) => {
   res.send('It is working');
@@ -16,19 +16,14 @@ router.post('/site/configuration', siteConfiguration.postSiteConfiguration);
 
 router.get('/site/configuration', siteConfiguration.getSiteConfiguration);
 
-router.post('/login', login.signIn);
+router.get('/contests', [middleware.verifyToken], contests.contests);
 
-router.get('/contests', contests.contests);
+router.get('/contest/:id/problems', [middleware.verifyToken], problems.problemsByContestId);
 
-router.get('/contest/:id/problems', problems.problemsByContestId);
+router.get('/contest/:contestNumber/languages',[middleware.verifyToken],  languages.getLanguagesByContestNumber);
 
-router.get('/contest/:contestNumber/languages', languages.getLanguagesByContestNumber);
+router.get('/contest/:contestNumber/problem/:problemNumber/language/:langNumber', [middleware.verifyToken], problems.getTimesbyLang);
 
-router.get('/contest/:contestNumber/problem/:problemNumber/language/:langNumber', problems.getTimesbyLang);
-
-// TODO only for testing remove after define new api's with private access.
-router.get('/private', auth.isAuth, function(req, res) {
-  res.status(200).send({message: 'have access to endpoints.'});
-});
+router.post('/signin', auth.signIn);
 
 module.exports = router
