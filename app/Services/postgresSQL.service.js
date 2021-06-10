@@ -6,7 +6,7 @@ const testConection = (configuration) => {
 };
 
 const getUserBocaAdmin = (name, password) => {
-  const query = 'select * from usertable where username = \''+name+'\' and usertype = \'admin\' and userpassword = \''+password+'\'' ;
+  const query = `select * from usertable where username = ${name} and usertype in ('admin', 'judge') and userpassword = ${password}` ;
   return executeQuery(query);
 };
 
