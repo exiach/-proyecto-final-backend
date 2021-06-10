@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const moment = require('moment');
 
 const config = require('../config');
 const postgresSqlService = require('../Services').postgresSqlService;
@@ -11,7 +10,7 @@ const signIn = async (req, res) => {
     const response = await postgresSqlService.getUserBocaAdmin(userName, password);
     if (response && response.length > 0) {
       const token = jwt.sign({ id: response[0].username }, config.SECRET, {
-        expiresIn: moment().add(2, 'hours').unix()
+        expiresIn: '25m'
       });
       return res.status(200).send({ 
         token: token,

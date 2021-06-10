@@ -12,13 +12,16 @@ const verifyToken = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, config.SECRET);
     const user = await postgresSqlService.getUsebyUserName(decoded.id);
-    
-    if (user.length === 0 || user.error)
-      return res.status(404).json({ message: 'Unauthorized' });
+    const isExpired = new Date() > new Date(decoded.exp * 1000);
+    if (isExpired || user.length === 0 || user.error)
+      return res.status(401).json({ message: 'Token epxired'});
 
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'Unauthorized!' });
+    if (error.name === 'TokenExpiredError')
+      return res.status(401).json({ message: 'Token epxired' });
+
+    return res.status(401).json({ message: error });
   }
 };
 module.exports = { verifyToken };
